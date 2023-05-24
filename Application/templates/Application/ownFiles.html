@@ -32,10 +32,24 @@
 
 		gtag('config', 'UA-119386393-1');
 	</script>
-	
+	{% comment %} below code is done for changing the image display on modal {% endcomment %}
+	<script>
+		function updatePreviewImage(imageUrl) {
+			var previewImage = document.getElementById("previewImage");
+			previewImage.src = imageUrl;
+  }
+</script>
+{% for message in messages %}
+    
+    <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}alert-info{% endif %}">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+           {{ message }}
+    </div>
+
+    {% endfor %}
 </head>
 <body>
-	
+
 	<div class="header">
 		<div class="header-left">
 			<div class="menu-icon dw dw-menu"></div>
@@ -85,6 +99,7 @@
 					</a>
 				</div>
 			</div>
+			
 			<div class="user-info-dropdown">
 				<div class="dropdown">
 					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -206,7 +221,7 @@
 							<span class="micon dw dw-calendar1"></span><span class="mtext">Upload Books</span>
 						</a>
 					</li>
-					<li>
+                    <li>
 						<a href="{% url 'ownFiles' %}" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-calendar1"></span><span class="mtext">Own Books</span>
 						</a>
@@ -216,6 +231,7 @@
 							<span class="micon dw dw-calendar1"></span><span class="mtext">Uploaded Books</span>
 						</a>
 					</li>
+					
 					<li>
 						<a href="{% url 'logout' %}" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-calendar1"></span><span class="mtext">Logout</span>
@@ -229,51 +245,90 @@
 
 	<div class="main-container">
 		<div class="pd-ltr-20">
-      <br>	
-			{% for message in messages %}
-    
-						<div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}alert-info{% endif %}">
-							<a class="close" href="#" data-dismiss="alert">×</a>
-							{{ message }}
-						</div>
-
-						{% endfor %}
-            <div class="card-box pd-20 height-100-p mb-30">
+			<div class="card-box pd-20 height-100-p mb-30">
+				<div class="row align-items-center">
+					<div class="col-md-4">
+						<img src="vendors/images/banner-img.png" alt="">
+					</div>
+					<div class="col-md-8">
+						<h4 class="font-20 weight-500 mb-10 text-capitalize">
+							own files </h4>
+					</div>
+				</div>
+			</div>
+      
+			<div class="card-box pd-20 height-100-p mb-30">
 				<div class="row align-items-center">
 					<div class="col-md-4">
 						<img src="vendors/images/banner-img.png" alt="">
 					</div>
 					<center>
+					<div class="col-md-9">
 						
-					<div class="col-md-8">
-						
-						{% load crispy_forms_tags %} {% comment %} this is done to apply boostrap to modelforms. see its setting in settings.py {% endcomment %} 
-						{% block content %}
-						
-						<h2>Upload a File</h2>
-						<br>
-						{% comment %} {% if submitted %}
-								Your data is submitted successfully!!
-						{% else %} {% endcomment %}
-						
-						<form action="" enctype="multipart/form-data" method=POST >
-							{% csrf_token %}
-							{% comment %} {{ form.as_p }} {% endcomment %}
-							{{ form| crispy }}
-							<button type="submit">Upload</button>
-						</form>
-						{% comment %} {% endif %} {% endcomment %}
-						
-						{% endblock %}
+							<div class="modal fade" id="PreviewPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">book cover preview</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+			
+								<div class="modal-body text-center" id="modal-body">
+  									<img id="previewImage" src="" alt="book image">
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								</div>
+								</div>
+							</div>
+							</div>
+						{% if currentUserFiles %}
+						<table class="table ">
+							<thead>
+								<tr>
+								<th>User Id</th>
+								<th>Book Cover</th>
+								<th>Title</th>
+								<th>Description</th>
+								<th>Cost</th>
+								<th>Year Published</th>
+								<th>Download</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for currentUserList in currentUserFiles %}
+								<tr>
+									<td id='userId'>{{currentUserList.user.id}}</td>
+									<td><div data-toggle="modal" data-target="#PreviewPicModal" data-pic="{{currentUserList.book_cover.url}}" onclick="updatePreviewImage('{{currentUserList.book_cover.url}}')"><img id="previewImage" src="{{currentUserList.book_cover.url}}" alt="book image" class='img-photo'></div></td>
+									<td>{{currentUserList.title}}</td>
+									<td>{{currentUserList.description}}</td>
+									<td>{{currentUserList.cost}}</td>
+									<td>{{currentUserList.year_published}}</td>
+									<td><a href="{{currentUserList.file.url}}" class="btn btn-primary btn-sm">Download PDF </a></td>
+								</tr>
+								 {% endfor %}
+							</tbody>
+						</table>
+						{% else %}
+							 {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    					<script>
+							$(document).ready(function() {
+								// Display alert and redirect
+								alert('No books uploaded yet!');
+								window.location.href = "{% url 'uploadFiles' %}";
+							});
+    					</script> {% endcomment %}
+						No books uploaded yet
+						{% endif %}
 						
 					</div>
 					</center>
 				</div>
-			</div>
-			
-			{% comment %} <div class="footer-wrap pd-20 mb-20 card-box">
-				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
-			</div> {% endcomment %}
+				
+			</div> 
+
 		</div>
    
 	<!-- js -->

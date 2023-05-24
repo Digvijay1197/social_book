@@ -21,6 +21,8 @@ class CustomUser(AbstractUser):
     birthYear = models.PositiveIntegerField(null=True, blank=True)
     address = models.CharField(max_length=200,  null=True, blank=True)
     age = models.PositiveIntegerField(null=True, blank=True)
+    token = models.CharField(null=True, blank=True, unique=True,  default='')
+    expiryTime = models.TimeField(auto_now=False, auto_now_add=False, null=True, blank=True, default=timezone.now)
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ['email']

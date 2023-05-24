@@ -205,6 +205,11 @@
 						</a>
 					</li>
 					<li>
+						<a href="{% url 'ownFiles' %}" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-calendar1"></span><span class="mtext">Own Books</span>
+						</a>
+					</li>
+					<li>
 						<a href="{% url 'uploadedFiles' %}" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-calendar1"></span><span class="mtext">Uploaded Books</span>
 						</a>
@@ -462,5 +467,27 @@
 	<script src="{% static 'css/src/plugins/datatables/js/dataTables.responsive.min.js'%}"></script>
 	<script src="{% static 'css/src/plugins/datatables/js/responsive.bootstrap4.min.js'%}"></script>
 	<script src="{% static 'css/vendors/scripts/dashboard.js'%}"></script>
+	<script>
+		function handleToken(){
+			var token = request.session.get('access_token')
+			
+			fetch('http://127.0.0.1:8000/authorsAndSellers', {
+				method :'GET',
+				headers: {
+					'Authorization': `Bearer $(token)`,
+					'content_type' : 'application/json'
+				},
+
+
+			})
+			.then(response => response.json())
+			.then(data =>{
+
+			})
+			.catch(error =>{
+				console.error(error);
+			});
+		}
+	</script>
 </body>
 </html>
