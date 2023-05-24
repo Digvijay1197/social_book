@@ -32,7 +32,7 @@
 	</script>
 	{% for message in messages %}
     
-    <div class="alert alert-success">
+    <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}alert-info{% endif %}">
         <a class="close" href="#" data-dismiss="alert">×</a>
            {{ message }}
     </div>
@@ -67,47 +67,25 @@
 						</div>
 						<form method="POST">
 							{% csrf_token %}
-							{% comment %} <div class="select-role">
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn active">
-										<input type="radio" name="options" id="admin">
-										<div class="icon"><img src="{% static 'css/vendors/images/briefcase.svg'%}" class="svg" alt=""></div>
-										<span>I'm</span>
-										Manager
-									</label>
-									<label class="btn">
-										<input type="radio" name="options" id="user">
-										<div class="icon"><img src="{% static 'css/vendors/images/person.svg'%}" class="svg" alt=""></div>
-										<span>I'm</span>
-										Employee
-									</label>
-								</div>
-							</div> {% endcomment %}
+							
 							<div class="input-group custom">
 								<input type="number" class="form-control form-control-lg" placeholder="OTP" name="OTP" id="OTP">
 								<div class="input-group-append custom">
 									<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
 								</div>
 							</div>
-							{% comment %} <div class="input-group custom">
-								<input type="password" class="form-control form-control-lg" placeholder="**********" name="password">
-								<div class="input-group-append custom">
-									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
-								</div>
-							</div> {% endcomment %}
+					
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="input-group mb-0">
 										
 											{% comment %} use code for form submit {% endcomment %}
 											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
+											<a class="btn btn-primary btn-lg btn-block" href="{% url 'resendOtp'%}">Resend Otp</a>
 										
 										{% comment %} <a class="btn btn-primary btn-lg btn-block" href="{% url 'index'%}">Sign In</a> {% endcomment %}
 									</div>
-									{% comment %} <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR</div>
-									<div class="input-group mb-0">
-										<a class="btn btn-outline-primary btn-lg btn-block" href="{% url 'register'%}">Register To Create Account</a>
-									</div> {% endcomment %}
+									
 								</div>
 							</div>
 						</form>

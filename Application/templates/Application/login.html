@@ -30,9 +30,14 @@
 
 		gtag('config', 'UA-119386393-1');
 	</script>
+	<style>
+		.messages .error {
+  				color: red;
+			}
+	</style>
 	{% for message in messages %}
     
-    <div class="alert alert-success">
+    <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'info' %}alert-info{% endif %}">
         <a class="close" href="#" data-dismiss="alert">×</a>
            {{ message }}
     </div>

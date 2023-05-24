@@ -2,11 +2,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from . import views
+from .views import UserLoginView
 from Application.views import ListUsers, CustomAuthToken, CustomUserViewSet
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
 
 urlpatterns = [
     path('login', views.login_run, name='login'),
-     path('otpVerification', views.otpVerification_run, name='otpVerification'),
+    path('otpVerification', views.otpVerification_run, name='otpVerification'),
+    path('resendOtp', views.resendOtp, name='resendOtp'),
     path('logout', views.logout_run, name='logout'),
     path('register',views.register_run, name='register'),
     path('index',views.index_run, name='index'),
@@ -15,7 +22,11 @@ urlpatterns = [
     path('uploadedFiles',views.uploadedFiles_run, name='uploadedFiles'),
     path('api/users/', ListUsers.as_view({'get':'list'})),
     path('api/users/<int:pk>', CustomUserViewSet.as_view({'get':'list'})),
-    path('api/token/auth/', CustomAuthToken.as_view()),
+    # path('api/token/auth/', CustomAuthToken.as_view()),
+    path('api/token/',TokenObtainPairView.as_view(), name='get_token'),
+    path('api/token/refresh',TokenRefreshView.as_view(),name= 'refresh_token'),
+    path('api/token/verify',TokenVerifyView.as_view(), name='verify_token'),
+     path('api/login/', UserLoginView.as_view(), name='user_login'),
 ]
 
 
