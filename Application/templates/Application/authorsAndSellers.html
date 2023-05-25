@@ -32,6 +32,21 @@
 
 		gtag('config', 'UA-119386393-1');
 	</script>
+	<script>
+			function toggleCheckbox(){
+			checkbox = document.getElementById("publicVisibility");
+			userStatus = document.getElementById("user_status");
+
+
+			if(checkbox.checked){
+				userStatus.disabled = true;
+			}
+			if(!checkbox.checked){
+				userStatus.disabled = false;
+			}
+
+		}
+	</script>
 </head>
 <body>
 	<!-- <div class="pre-loader">
@@ -260,8 +275,8 @@
 						<form method="POST">
                   			{% csrf_token %}
 								<div>
-									{% comment %} <input type="checkbox" name="publicVisibility" id="publicVisibility">
-									<label for="publicVisibility">Public visibility</label> {% endcomment %}
+									<input type="checkbox" name="publicVisibility" id="publicVisibility" onchange="toggleCheckbox()>
+									<label for="publicVisibility">Public visibility</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<label for="user_status">Select User Status:</label>
 									<select name="user_status" id="user_status">
@@ -293,8 +308,8 @@
 						</ul>  {% endcomment %}
 						{% if CustomUsers %}
 						
-						<table class="table table-striped">
-							<thead class='table-dark'>
+						<table class="table">
+							<thead>
 								<tr>
 								<th>User Name</th>
 								<th>Email</th>

@@ -39,7 +39,7 @@ class UploadedFile(models.Model):
     description = models.TextField(null=False)
     cost = models.DecimalField(max_digits=8, decimal_places=2, null=False)
     year_published = models.IntegerField(null=False)
-    book_cover =  models.ImageField(upload_to='TestFile/cover', max_length=255, null=True, blank=True)
+    book_cover =  models.ImageField(upload_to='TestFile/cover', max_length=255, null=True, blank=True,validators=[FileExtensionValidator(allowed_extensions=['jpeg'])])
     file = models.FileField(upload_to='TestFiles/pdf', validators= [FileExtensionValidator(allowed_extensions=['pdf'])])
 
 class Profile(models.Model):

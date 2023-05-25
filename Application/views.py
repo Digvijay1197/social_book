@@ -31,6 +31,9 @@ from django.db.models import Q
 from datetime import datetime, timedelta
 from django.utils import timezone
 from .decorators import has_uploaded_books
+from sqlalchemy import create_engine, text
+import sqlalchemy
+import pandas as pd
 
 # Create your views here.
 @csrf_protect
@@ -227,7 +230,16 @@ def authorsAndSellers_run(request):
         
         userStatus = request.POST.get('user_status')
         if publicVisibility == 'on':
-            filteredCustomers = CustomUser.objects.filter(publicVisibility=1) 
+            # filteredCustomers = CustomUser.objects.filter(publicVisibility=1)
+            engine = create_engine('postgresql://postgres:Digvijay%401197@localhost:5432/social_book')
+            conn= engine.connect()
+            query = text('SELECT * from public."Application_customuser" where "publicVisibility"= :value')
+            params = {'value': 'true'}
+            result = conn.execute(query, params)
+            filteredCustomers = [row for row in result]
+            print(filteredCustomers)
+            conn.close()
+
         elif userStatus == '1':
             filteredCustomers = CustomUser.objects.filter(is_active=1)
         elif userStatus == '0':
@@ -258,7 +270,16 @@ def uploadFiles_run(request):
             return redirect('ownFiles')
         else:
             print(form.errors)
-            return redirect('index')
+            # Check for specific file and image field errors
+            if 'file' in form.errors:
+                messages.error(request, 'Error with file field: ' + ', '.join(form.errors['file']))
+                return redirect('uploadFiles')
+            if 'book_cover' in form.errors:
+                messages.error(request, 'Error with image field: ' + ', '.join(form.errors['book_cover']))
+                return redirect('uploadFiles')
+    
+            # messages.error(request, 'image should be jpeg type and file of pdf format.')
+            
     else:
         form = UploadFileForm(initial = initial_data)
        
