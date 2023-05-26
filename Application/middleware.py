@@ -16,7 +16,7 @@ class TokenAuthenticationMiddleware:
     def __call__(self, request):
         # Check if the request has a JWT token
         
-        exempt_paths = ['/login','/otpVerification', '/logout', '/resendOtp', '/register']  # Add any other exempt paths if needed
+        exempt_paths = ['/login','/otpVerification', '/logout', '/resendOtp', '/register', 'forgotPassword']  # Add any other exempt paths if needed
         
         if request.path in exempt_paths:
             return self.get_response(request)

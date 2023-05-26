@@ -215,7 +215,6 @@ def index_run(request):
     # access_token = request.GET.get('token', None)
     return render(request,'Application/index.html',  {'User': user})
 
-# @login_required(login_url='login')
 def forgotPassword_run(request):
     user = request.session.get('user')
     return render(request,'Application/forgot-password.html',  {'User': user})

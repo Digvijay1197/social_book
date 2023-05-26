@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_hotp',
     'django_otp.plugins.otp_static',
+    'storages',
 ]
 
 CRISPY_TEMPLATE_PACK ='bootstrap4'
@@ -110,12 +111,19 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+    # 'default': {
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'NAME': 'social_book',
+    #    'USER': 'postgres',
+    #    'PASSWORD': 'Digvijay@1197',
+    #    'HOST': 'localhost',
+    # }
     'default': {
        'ENGINE': 'django.db.backends.postgresql',
        'NAME': 'social_book',
        'USER': 'postgres',
-       'PASSWORD': 'Digvijay@1197',
-       'HOST': 'localhost',
+       'PASSWORD': 'Digvijay1197',
+       'HOST': 'database-1.c5jb6rix9xix.ap-south-1.rds.amazonaws.com',
     }
 }
 
@@ -170,6 +178,16 @@ MEDIA_URL="/media/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'Application.CustomUser'
 
+
+AWS_ACCESS_KEY_ID = "AKIAYOHKXDY5BSYUMBSQ"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "mybucket-digvijay"
+AWS_S3_REGION_NAME = "ap-south-1"
+AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = True
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# AWS_S3_CUSTOM_DOMAIN = "%s.s3"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
