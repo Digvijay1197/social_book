@@ -264,7 +264,7 @@
 
 	<div class="main-container">
 		<div class="pd-ltr-20">
-			<div class="card-box pd-20 height-100-p mb-30">
+			{% comment %} <div class="card-box pd-20 height-100-p mb-30">
 				<div class="row align-items-center">
 					<div class="col-md-4">
 						<img src="vendors/images/banner-img.png" alt="">
@@ -274,72 +274,23 @@
 							Uploaded files </h4>
 					</div>
 				</div>
-			</div>
-{% comment %}       
-			<div class="card-box pd-20 height-100-p mb-30">
-				<div class="row align-items-center">
-					<div class="col-md-4">
-						<img src="vendors/images/banner-img.png" alt="">
-					</div>
-					<center>
-					<div class="col-md-9">
-						
-							<div class="modal fade" id="PreviewPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">book cover preview</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-			
-								<div class="modal-body text-center" id="modal-body">
-  									<img id="previewImage" src="" alt="book image">
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								</div>
-								</div>
-							</div>
-							</div>
-						{% if currentUserFiles %}
-						<table class="table ">
-							<thead>
-								<tr>
-								<th>User Id</th>
-								<th>Book Cover</th>
-								<th>Title</th>
-								<th>Description</th>
-								<th>Cost</th>
-								<th>Year Published</th>
-								<th>Download</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for currentUserList in currentUserFiles %}
-								<tr>
-									<td>{{currentUserList.user.id}}</td>
-									<td><div data-toggle="modal" data-target="#PreviewPicModal" data-pic="{{currentUserList.book_cover.url}}" onclick="updatePreviewImage('{{currentUserList.book_cover.url}}')"><img id="previewImage" src="{{currentUserList.book_cover.url}}" alt="book image" class='img-photo'></div></td>
-									<td>{{currentUserList.title}}</td>
-									<td>{{currentUserList.description}}</td>
-									<td>{{currentUserList.cost}}</td>
-									<td>{{currentUserList.year_published}}</td>
-									<td><a href="{{currentUserList.file.url}}" class="btn btn-primary btn-sm">Download PDF </a></td>
-								</tr>
-								 {% endfor %}
-							</tbody>
-						</table>
-						{% else %}
-							No books uploaded yet
-						{% endif %}
-						
-					</div>
-					</center>
-				</div>
-				
-			</div>  {% endcomment %}
+			</div> {% endcomment %}
 
+			<div class="page-header">
+					<div class="row">
+						<div class="col-md-6 col-sm-12">
+							<div class="title">
+								<h4>Uploaded Books</h4>
+							</div>
+							<nav aria-label="breadcrumb" role="navigation">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">uploded books</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
 
 			<div class="card-box pd-20 height-100-p mb-30">
 				<div class="">
@@ -370,49 +321,35 @@
 										<button class="btn btn-primary form-control" type="submit">Filter</button>
 										</div>
 									</div>
-									{% comment %} <label for="allUserLable">All </label>
-									<input type="checkbox" name="allUser" id="allUser">
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									
-									
-									<label for="useridlable">year:</label>
-									<input type="number" name="year" id="year">
-									<label for="useridlable">Enter title:</label>
-									<input type="text" name="title" id="title">
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<label for="useridlable">Enter user id:</label>
-									<input type="number" name="userId" id="userId">
-									<button type="submit" >Filter</button> {% endcomment %}
 								</div>
                  		 </form>
 					</div>
 				</div>
 			</div>
-            <div class="card-box pd-20 height-100-p mb-30">
-				<div class="row align-items-center">
-					
-					<center>
-					<div class="col-md-9">
-						
-							<div class="modal fade" id="PreviewPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">book cover preview</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								
-								<div class="modal-body text-center" id="modal-body">
-  									<img id="previewImage" src="" alt="book image">
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								</div>
+			<!-- Modal start -->
+			<div class="modal fade" id="PreviewPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">book cover preview</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+									
+										<div class="modal-body text-center" id="modal-body">
+											<img id="previewImage" src="" alt="book image">
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										</div>
+									</div>
 								</div>
 							</div>
-							</div>
+			<!-- Modal end -->
+			<!-- Responsive tables Start -->
+				<div class="pd-20 card-box mb-30">
+					<div class="table-responsive">
 						{% if allFiles %}
 						<table class="table">
 							<thead>
@@ -444,13 +381,19 @@
 							No Data Found
 						{% endif %}
 					</div>
-					</center>
+					<div class="collapse collapse-box" id="responsive-table">
+						<div class="code-box">
+							<div class="clearfix">
+								<a href="javascript:;" class="btn btn-primary btn-sm code-copy pull-left"  data-clipboard-target="#responsive-table-code"><i class="fa fa-clipboard"></i> Copy Code</a>
+								<a href="#responsive-table" class="btn btn-primary btn-sm pull-right" rel="content-y"  data-toggle="collapse" role="button"><i class="fa fa-eye-slash"></i> Hide Code</a>
+							</div>
+						</div>
+					</div>
 				</div>
-				
-			</div>
+				<!-- Responsive tables End -->
 
 		</div>
-   
+	</div>
 	<!-- js -->
 	<script src="{% static 'css/vendors/scripts/core.js'%}"></script>
 	<script src="{% static 'css/vendors/scripts/script.min.js'%}"></script>

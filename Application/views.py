@@ -226,11 +226,11 @@ def authorsAndSellers_run(request):
     # access_token = request.GET.get('token', None)
     if request.method == 'POST':
         publicVisibility = request.POST.get('publicVisibility')
-        
+       
         userStatus = request.POST.get('user_status')
         if publicVisibility == 'on':
             # filteredCustomers = CustomUser.objects.filter(publicVisibility=1)
-            engine = create_engine('postgresql://postgres:Digvijay%401197@localhost:5432/social_book')
+            engine = create_engine('postgresql://postgres:Digvijay1197@database-1.c5jb6rix9xix.ap-south-1.rds.amazonaws.com:5432/social_book')
             conn= engine.connect()
             query = text('SELECT * from public."Application_customuser" where "publicVisibility"= :value')
             params = {'value': 'true'}
